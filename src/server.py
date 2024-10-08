@@ -10,9 +10,10 @@ def connect(sid, environ, auth):
     print('connect', sid)
 
 @sio.event
-def proccess_data(sid, data):
-    print('Iniciando DPOS')
-    return transaction(data)
+async def do_transaction(sid, data):
+    result = transaction(data)
+    #print(result)
+    #await sio.emit('result_transaction', result, room=sid)
 
 @sio.event
 def disconnect(sid):
@@ -20,8 +21,7 @@ def disconnect(sid):
 
 async def index(req):
     with open('index.html') as f:
-        return web.Response(text = f.read(), content_type = 'text/html')
-
+        return web.Response(text = f.read(), content_type = 'text/html', charset='UTF-8')
 #app.router.add_static('/static', 'static')
 app.router.add_get('/', index)
 
