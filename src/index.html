@@ -6,6 +6,39 @@
     <title>Document</title>
 </head>
 <body>
-    <p>texto de teste</p>
+    <h1>TEF - Transacoes</h1>
+    <form action="" method="post" style="display: flex; flex-direction: column; gap: 20px; max-width: 500px;">
+        <div >
+            <label for="value">Valor da transacao</label>
+            <input type="number" name="value" id="value">
+        </div>
+        <div>
+            <label for="cupom">Numero do cupom fiscal</label>
+            <input type="number" name="cupom" id="cupom">
+        </div>
+        <input type="submit" value="confirmar" id="btn">
+    </form>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
+        integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
+        crossorigin="anonymous">
+</script>
+<script>
+    const socket = io('http://localhost:5050');
+        socket.on('connect', () => console.log(socket.id));
+        //socket.emit()
+        const value = document.getElementById('value');
+        const cupom = document.getElementById('cupom');
+
+        const btn = document.getElementById('btn')
+        btn.addEventListener('onClick', (e) => {
+            e.preventDefault();
+            const obj = {
+                pValorTransacao: value.value,
+                pNumeroCupom: cupom.value
+            }
+            console.log(obj);
+        })
+        //const socket = io('http://localhost:5050')
+</script>
 </body>
 </html>
