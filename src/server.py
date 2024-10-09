@@ -1,6 +1,7 @@
 from aiohttp import web
 import socketio
 from card_transaction import transaction
+import json
 sio = socketio.AsyncServer()
 
 app = web.Application()
@@ -13,7 +14,7 @@ def connect(sid, environ, auth):
 async def do_transaction(sid, data):
     result = transaction(data)
     #print(result)
-    #await sio.emit('result_transaction', result, room=sid)
+    await sio.emit('result_transaction', json.dumps(result), room=sid)
 
 @sio.event
 def disconnect(sid):

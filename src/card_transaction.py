@@ -12,7 +12,7 @@ def transaction(data):
     id = random.randint(0, 99999)
     #print(data['pValorTransacao'])
     data_transaction = Data(data['pValorTransacao'], data['pNumeroCupom'], id)
-    print(data_transaction)
+    print(data_transaction.value)
     return data_transaction
 
 sys.modules['__transaction_module__'] = transaction
