@@ -3,48 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TEF</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>TEF - Transacoes</h1>
-    <form action="" method="post" style="display: flex; flex-direction: column; gap: 20px; max-width: 500px;">
-        <div class="width: 100%;">
-            <label for="value">Valor da transacao</label>
-            <input type="number" name="value" id="value" class="width: 100%;">
-        </div>
-        <div>
-            <label for="cupom">Numero do cupom fiscal</label>
-            <input type="number" name="cupom" id="cupom">
-        </div>
-        <input type="submit" value="confirmar" id="btn">
-        <span id="session"></span>
-    </form>
+    <main class="container p-5">
+        <h1>TEF - Transações</h1>
+        <form class="w-50">
+            <div class="mb-3">
+                <label for="cupom" class="form-label">Número do cupom fiscal</label>
+                <input type="number" class="form-control" id="cupom" aria-describedby="cupom">
+                <div id="cupom" class="form-text">Informe o número do cupom do fiscal</div>
+            </div>
+            <div class="mb-3">
+                <label for="value" class="form-label">Valor da transação</label>
+                <input type="number" class="form-control" id="value">
+                <div id="cupom" class="form-text">Informe o valor do documento</div>
+            </div>
+           <div class="mb-3">
+            <label for="type" class="form-label">Cartão</label>
+            <select class="form-select form-select-sm" aria-label="Selecione um tipo de cartão" id="card">
+                <option selected value="debito">debito</option>
+                <option value="credito">credito</option>
+            </select>
+           </div>
+            <button type="submit" class="btn btn-success" id="btn">Confirmar</button>
+        </form>    
+        <table id="tableData" class="table">
+            <tr>
+                <th scope="col">Nºcontrole</th>
+                <th scope="col">Nºcupom</th>
+                <th scope="col">Cartão</th>
+                <th scope="col">valor</th>
+            </tr>
+        </table>
+    </main>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
         integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
         crossorigin="anonymous">
 </script>
-<script>
-    const socket = io('http://localhost:5050');
-    const session = document.getElementById('session');
-        socket.on('connect', () => session.innerHTML = `Sessao: ${socket.id}`);
-    
-        const value = document.getElementById('value');
-        const cupom = document.getElementById('cupom');
-        const btn = document.getElementById('btn');
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const obj = {
-                pValorTransacao: value.value,
-                pNumeroCupom: cupom.value
-            }
-        socket.emit('do_transaction', obj);
-
-        socket.on('result_transaction', (result) => { 
-            console.log(result)
-        })
-            //console.log(obj);
-        })
-
-</script>
+<script src="static/index.js"></script>
 </body>
 </html>
